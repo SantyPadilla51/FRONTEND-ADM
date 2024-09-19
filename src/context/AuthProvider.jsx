@@ -17,7 +17,7 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                const result = await fetch("http://localhost:6543/perfil", {
+                const result = await fetch("https://back-end-adm-pacientes.vercel.app/perfil", {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

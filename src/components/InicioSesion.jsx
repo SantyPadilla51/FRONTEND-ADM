@@ -30,7 +30,7 @@ const InicioSesion = () => {
                 toast.loading("Iniciando Sesion...",{
                     position: "top-center"
                 })
-                const resultado = await fetch('http://localhost:6543/iniciar-sesion', {
+                const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/iniciar-sesion', {
                     method: "POST",
                     body: JSON.stringify(datos),
                     headers: { 'Content-Type': 'application/json' }

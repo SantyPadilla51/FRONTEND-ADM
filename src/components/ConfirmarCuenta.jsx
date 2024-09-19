@@ -21,7 +21,7 @@ const ConfirmarCuenta = () => {
         // Realizar la petición a la API para confirmar la cuenta
         try {
             setCargando(true)
-            const peticion = await fetch(`http://localhost:6543/confirmar-cuenta/${t}`)
+            const peticion = await fetch(`https://back-end-adm-pacientes.vercel.app/confirmar-cuenta/${t}`)
 
             const resultado = await peticion.json();
 

@@ -20,7 +20,7 @@ const NuevoPassword = () => {
         if (password === repetirPassword) {
             try {
                 setCargando(true)
-                const peticion = await fetch(`http://localhost:6543/olvide-password/${token}`, {
+                const peticion = await fetch(`https://back-end-adm-pacientes.vercel.app/olvide-password/${token}`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

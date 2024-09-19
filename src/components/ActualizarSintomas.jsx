@@ -24,7 +24,7 @@ const ActualizarSintomas = () => {
     const obtenerPaciente = async () => {
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:6543/pacienteId/${id}`, {
+            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/pacienteId/${id}`, {
                 method: "GET",
                 headers: {
                     'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ const ActualizarSintomas = () => {
                 position: "top-center"
             })
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:6543/actualizar-paciente/${id}`, {
+            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/actualizar-paciente/${id}`, {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',

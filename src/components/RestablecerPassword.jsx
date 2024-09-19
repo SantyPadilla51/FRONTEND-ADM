@@ -22,7 +22,7 @@ const RestablecerPassword = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:6543/olvide-password', {
+      const res = await fetch('https://back-end-adm-pacientes.vercel.app/olvide-password', {
         method: "POST",
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })

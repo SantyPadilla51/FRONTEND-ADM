@@ -26,7 +26,7 @@ const RegistrarUser = () => {
         e.preventDefault();
         setCargando(true)
         try {
-            const resultado = fetch('http://localhost:6543/crear-usuario', {
+            const resultado = fetch('https://back-end-adm-pacientes.vercel.app/crear-usuario', {
                 method: "POST",
                 body: JSON.stringify(usuario),
                 headers: { 'Content-Type': 'application/json' }

@@ -15,7 +15,7 @@ const MiPerfil = () => {
     const obtenerPerfil = async () => {
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch('http://localhost:6543/perfil',
+            const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/perfil',
                 {
                     method: "GET",
                     headers: {

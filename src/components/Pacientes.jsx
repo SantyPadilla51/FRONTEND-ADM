@@ -36,7 +36,7 @@ const Pacientes = () => {
     const obtenerPacientes = async () => {
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch('http://localhost:6543/pacientes',
+            const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/pacientes',
                 {
                     method: "GET",
                     headers: {
@@ -59,7 +59,7 @@ const Pacientes = () => {
         setEliminandoId(id)
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`http://localhost:6543/eliminar-paciente/${id}`, {
+            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/eliminar-paciente/${id}`, {
                 method: "DELETE",
                 headers: {
                     'Content-Type': 'application/json',
