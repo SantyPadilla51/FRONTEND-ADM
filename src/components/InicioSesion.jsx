@@ -40,6 +40,7 @@ const InicioSesion = () => {
 
                 if (result.ok != true) {
                     toast.error(result.msg)
+                    return
                 } else {
                     setAuth(result)
                     localStorage.setItem('token', result.token)
