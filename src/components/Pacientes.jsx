@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import NavbarAdmin from "./NavbarAdmin"
 import { ToastContainer, toast } from 'react-toastify';
+import clienteAxios from "../config/axios";
+import NavbarAdmin from "./NavbarAdmin"
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -11,42 +12,35 @@ const Pacientes = () => {
     const [buscador, setBuscador] = useState('')
     const [pacientes, setPacientes] = useState([])
     const [pacienteParticular, setPacienteParticular] = useState(null)
-    const [eliminandoId, setEliminandoId] = useState(null) 
+    const [eliminandoId, setEliminandoId] = useState(null)
 
     const buscarPaciente = async (e) => {
         e.preventDefault()
         const dni = Number(buscador)
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch(`http://localhost:6543/pacientes/${dni}`,
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-            const data = await resultado.json()
+            const url = `/pacientes/${dni}`
+            const { data } = await clienteAxios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+
             setPacienteParticular(data.paciente[0]);
         } catch (error) {
-            console.log("No se encontro ningun resultado");
+            toast.error("No se encontro al paciente")
         }
     }
 
     const obtenerPacientes = async () => {
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/pacientes',
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
+            const url = "/pacientes"
+            const { data } = await clienteAxios.get(url, {
+                headers: {
+                    Authorization: `Bearer ${token}`
                 }
-            )
-
-            const data = await resultado.json()
+            })
             setPacientes(data)
 
         } catch (error) {
@@ -54,19 +48,17 @@ const Pacientes = () => {
         }
     }
 
-    const eliminarPaciente = async (e, id) => { 
+    const eliminarPaciente = async (e, id) => {
         const cardBody = e.target.parentElement.parentElement
         setEliminandoId(id)
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/eliminar-paciente/${id}`, {
-                method: "DELETE",
+            const url = `/eliminar-paciente/${id}`
+            const { data } = await clienteAxios.delete(url, {
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            });
-            const data = await response.json()
+            })
 
             if (data.ok === true) {
                 cardBody.classList.add('scale-out-horizontal')
@@ -80,7 +72,7 @@ const Pacientes = () => {
         } catch (error) {
             setCargando(false)
             toast.error('Ocurrió un error')
-        } finally{
+        } finally {
             setEliminandoId(null)
         }
     }
@@ -205,8 +197,8 @@ const Pacientes = () => {
                                     Actualizar Sintomas
                                 </button>
                                 <button
-                                    className={`bg-red-700 font-bold w-full text-white p-2 ${eliminandoId === paciente.id  ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'}`}
-                                    onClick={(e) => eliminarPaciente(e , paciente.id)}
+                                    className={`bg-red-700 font-bold w-full text-white p-2 ${eliminandoId === paciente.id ? 'opacity-50 cursor-not-allowed' : 'hover:bg-red-600'}`}
+                                    onClick={(e) => eliminarPaciente(e, paciente.id)}
                                     disabled={eliminandoId === paciente.id}
                                 >
                                     {eliminandoId === paciente.id ? 'Eliminando...' : 'Eliminar Paciente'}

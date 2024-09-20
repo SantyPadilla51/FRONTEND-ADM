@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import clienteAxios from "../config/axios"
 import NavbarAdmin from "./NavbarAdmin"
 import EliminarPerfilToast from "./EliminarPerfilToast"
 
@@ -15,17 +16,14 @@ const MiPerfil = () => {
     const obtenerPerfil = async () => {
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/perfil',
-                {
-                    method: "GET",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    }
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
                 }
-            )
+            }
+            const { data } = await clienteAxios.get('/perfil', config)
 
-            const data = await resultado.json()
             setDatos({
                 nombre: data.doctor.nombre,
                 apellido: data.doctor.apellido,
@@ -41,33 +39,33 @@ const MiPerfil = () => {
     // const eliminarPerfil = async (e) => {
     //     setEliminarActivado(true)
     //     e.preventDefault()
-        // try {
-        //     const token = localStorage.getItem('token')
-        //     const resultado = await fetch('http://localhost:6543/eliminar-perfil',
-        //         {
-        //             method: "DELETE",
-        //             headers: {
-        //                 'Content-Type': 'application/json',
-        //                 Authorization: `Bearer ${token}`
-        //             }
-        //         }
-        //     )
-        //     const respuesta = await resultado.json()
+    // try {
+    //     const token = localStorage.getItem('token')
+    //     const resultado = await fetch('http://localhost:6543/eliminar-perfil',
+    //         {
+    //             method: "DELETE",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         }
+    //     )
+    //     const respuesta = await resultado.json()
 
-        //     if (respuesta.ok === true) {
-        //         localStorage.removeItem('token')
-        //         toast.loading('Eliminando Cuenta...')
-        //     }
-        // }
-        // catch (error) {
-        //     console.log('Hubo un error');
-        // }
+    //     if (respuesta.ok === true) {
+    //         localStorage.removeItem('token')
+    //         toast.loading('Eliminando Cuenta...')
+    //     }
+    // }
+    // catch (error) {
+    //     console.log('Hubo un error');
+    // }
     // }
 
     const eliminarPerfil = (e) => {
         e.preventDefault()
         console.log("eliminando..");
-        
+
         setEliminarActivado(true) // Activa el modal de confirmación
     }
 

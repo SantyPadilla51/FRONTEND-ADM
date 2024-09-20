@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
-import NavbarAdmin from "./NavbarAdmin";
 import { ToastContainer, toast } from 'react-toastify';
+import clienteAxios from "../config/axios";
+import NavbarAdmin from "./NavbarAdmin";
 import 'react-toastify/dist/ReactToastify.css';
 
 const ActualizarSintomas = () => {
@@ -24,15 +25,13 @@ const ActualizarSintomas = () => {
     const obtenerPaciente = async () => {
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/pacienteId/${id}`, {
-                method: "GET",
+            const url = `/pacienteId/${id}`
+            const { data } = await clienteAxios.get(url, {
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${token}`
                 }
-            }
-            );
-            const data = await response.json();
+            })
+
             setPaciente({
                 nombre: data.paciente[0].nombre || "",
                 apellido: data.paciente[0].apellido || "",
@@ -60,19 +59,15 @@ const ActualizarSintomas = () => {
                 position: "top-center"
             })
             const token = localStorage.getItem('token')
-            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/actualizar-paciente/${id}`, {
-                method: "PUT",
+            const url = `/actualizar-paciente/${id}`
+            const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({
-                    sintomas: paciente.sintomas
-                })
+                    'Authorization': `Bearer ${token}`
+                }
             }
-            );
 
-            const data = await response.json();
+            const { data } = await clienteAxios.put(url, JSON.stringify(paciente), config);
 
             if (data.ok === true) {
                 setTimeout(() => {
@@ -111,13 +106,13 @@ const ActualizarSintomas = () => {
                         <textarea className="p-1" name="sintomas" id="" rows={8} value={paciente.sintomas} onChange={e => handleChange(e)} ></textarea>
                     </form>
                     <button
-                    className={`bg-blue-800 w-full text-white p-2 mt-5 ${cargando ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
-                    type="submit"
-                    onClick={e => actualizarPaciente(e)}
-                    disabled={cargando}
-                >
-                    {cargando ? 'Guardando...' : 'Guardar Cambios'}
-                </button>
+                        className={`bg-blue-800 w-full text-white p-2 mt-5 ${cargando ? 'opacity-50 cursor-not-allowed' : 'hover:bg-blue-600'}`}
+                        type="submit"
+                        onClick={e => actualizarPaciente(e)}
+                        disabled={cargando}
+                    >
+                        {cargando ? 'Guardando...' : 'Guardar Cambios'}
+                    </button>
                 </div>
             </div>
 

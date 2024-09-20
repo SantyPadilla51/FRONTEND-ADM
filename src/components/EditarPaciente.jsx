@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import clienteAxios from "../config/axios";
 import NavbarAdmin from "./NavbarAdmin";
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const EditarPaciente = () => {
 
@@ -23,15 +25,14 @@ const EditarPaciente = () => {
     const obtenerPaciente = async () => {
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/pacienteId/${id}`, {
-                method: "GET",
+            const url = `/pacienteId/${id}`
+            const config = {
                 headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
+                    'Authorization': `Bearer ${token}`
                 }
             }
-            );
-            const data = await response.json();
+            const {data} = await clienteAxios.get(url, config)
+
             setFormData({
                 nombre: data.paciente[0].nombre || "",
                 apellido: data.paciente[0].apellido || "",
@@ -54,16 +55,14 @@ const EditarPaciente = () => {
         })
         try {
             const token = localStorage.getItem('token')
-            const response = await fetch(`https://back-end-adm-pacientes.vercel.app/actualizar-paciente/${id}`, {
-                method: "PUT",
+            const url = `/actualizar-paciente/${id}`;
+            const config = {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify(formData)
+                    'Authorization': `Bearer ${token}`
+                }
             }
-            );
-            const data = await response.json();
+            const { data } = await clienteAxios.put(url, JSON.stringify(formData), config)
 
             if (data.ok === true) {
                 setTimeout(() => {

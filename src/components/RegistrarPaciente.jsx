@@ -1,8 +1,9 @@
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import clienteAxios from '../config/axios';
 import NavbarAdmin from './NavbarAdmin';
+import 'react-toastify/dist/ReactToastify.css';
 
 const RegistrarPaciente = () => {
 
@@ -30,24 +31,22 @@ const RegistrarPaciente = () => {
         toast.loading("Guardando Paciente")
         try {
             const token = localStorage.getItem('token')
-            const resultado = await fetch('http://localhost:6543/crear-paciente', {
-                method: "POST",
-                body: JSON.stringify(paciente),
+            const url = "/crear-paciente"
+            const config = {
                 headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 }
-            })
+            }
+            const { data } = await clienteAxios.post(url, paciente, config)
 
-            const result = await resultado.json()
-
-            if (resultado.ok === true) {
+            if (data.ok === true) {
                 setCargando(false)
                 setTimeout(() => {
                     navigate('/admin/pacientes')
                 }, 1500);
             } else {
-                toast.error(result.msg)
+                toast.error(data.msg)
             }
 
         } catch (error) {

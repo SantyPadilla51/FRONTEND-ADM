@@ -1,8 +1,9 @@
 import { useState } from "react"
+import clienteAxios from "../config/axios";
 import { useNavigate, Link } from "react-router-dom"
+import { ToastContainer, toast } from 'react-toastify';
 import Navbar from "./Navbar";
 import useAuth from "../hooks/useAuth";
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -30,20 +31,15 @@ const InicioSesion = () => {
                 toast.loading("Iniciando Sesion...",{
                     position: "top-center"
                 })
-                const resultado = await fetch('https://back-end-adm-pacientes.vercel.app/iniciar-sesion', {
-                    method: "POST",
-                    body: JSON.stringify(datos),
-                    headers: { 'Content-Type': 'application/json' }
-                })
+                const url = "/iniciar-sesion"
+                const {data} = await clienteAxios.post(url, datos)
 
-                const result = await resultado.json();
-
-                if (result.ok != true) {
+                if (data.ok != true) {
                     toast.error(result.msg)
                     return
                 } else {
-                    setAuth(result)
-                    localStorage.setItem('token', result.token)
+                    setAuth(data)
+                    localStorage.setItem('token', data.token)
                     setTimeout(() => {
                         navigate("/admin/pacientes")
                     }, 1000);

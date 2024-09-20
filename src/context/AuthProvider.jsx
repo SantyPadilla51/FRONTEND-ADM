@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react"
+import clienteAxios from "../config/axios"
 
 const AuthContext = createContext()
 
@@ -17,10 +18,10 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                const result = await fetch("https://back-end-adm-pacientes.vercel.app/perfil", {
-                    method: 'GET',
+                const url = "/perfil"
+                
+                const result = await clienteAxios.get(url, {
                     headers: {
-                        'Content-Type': 'application/json',
                         Authorization: `Bearer ${token}`
                     }
                 })
