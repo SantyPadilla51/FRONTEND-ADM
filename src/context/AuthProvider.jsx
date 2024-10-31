@@ -20,15 +20,13 @@ const AuthProvider = ({ children }) => {
             try {
                 const url = "/perfil"
                 
-                const result = await clienteAxios.get(url, {
+                const data = await clienteAxios.get(url, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 })
 
-                const resultado = await result.json()
-
-                setAuth(resultado)
+                setAuth(data)
 
             } catch (error) {
                 setAuth({})
