@@ -35,7 +35,7 @@ const InicioSesion = () => {
                 const {data} = await clienteAxios.post(url, datos)
 
                 if (data.ok != true) {
-                    toast.error(result.msg)
+                    toast.error(data.msg)
                     return
                 } else {
                     setAuth(data)
