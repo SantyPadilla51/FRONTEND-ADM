@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ClipLoader from "react-spinners/ClipLoader";
+import clienteAxios from "../config/axios";
 
 const ConfirmarCuenta = () => {
 
@@ -21,7 +22,8 @@ const ConfirmarCuenta = () => {
         // Realizar la petición a la API para confirmar la cuenta
         try {
             setCargando(true)
-            const peticion = await fetch(`https://back-end-adm-pacientes.vercel.app/confirmar-cuenta/${t}`)
+            const url = '/confirmar-cuenta/'
+            const peticion = await clienteAxios.post(`${url}${token}`)
 
             const resultado = await peticion.json();
 
