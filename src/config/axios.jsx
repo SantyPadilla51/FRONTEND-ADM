@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const clienteAxios = axios.create({
-    baseURL: "https://backend-adm.onrender.com"
+    baseURL: ${import.meta.env.VITE_BACKEND_URL}
 })
 
 export default clienteAxios
