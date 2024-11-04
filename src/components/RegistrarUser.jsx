@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ClipLoader from "react-spinners/ClipLoader";
 import Navbar from "./Navbar";
+import clienteAxios from "../config/axios";
 
 
 const RegistrarUser = () => {
@@ -26,13 +27,10 @@ const RegistrarUser = () => {
         e.preventDefault();
         setCargando(true)
         try {
-            const resultado = fetch('https://back-end-adm-pacientes.vercel.app/crear-usuario', {
-                method: "POST",
-                body: JSON.stringify(usuario),
-                headers: { 'Content-Type': 'application/json' }
-            })
-
-            const data = await resultado.json();
+            
+            const url = "crear-usuario/"
+            const req = await clienteAxios.post(url, usuario)
+            const data = await req.json();
 
             if (data.ok === true) {
                 toast.success(data.msg)
