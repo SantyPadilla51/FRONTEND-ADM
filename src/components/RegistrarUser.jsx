@@ -28,7 +28,7 @@ const RegistrarUser = () => {
         setCargando(true)
         try {
             
-            const url = "crear-usuario/"
+            const url = "crear-usuario"
             const req = await clienteAxios.post(url, usuario)
             const data = await req.json();
 
