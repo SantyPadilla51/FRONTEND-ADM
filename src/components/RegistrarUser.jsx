@@ -29,15 +29,9 @@ const RegistrarUser = () => {
         e.preventDefault();
         setCargando(true)
         try {
-<<<<<<< HEAD
-            const url = "crear-usuario"
-            const {data} = await clienteAxios.post(url, usuario)
-=======
-            
             const url = "crear-usuario"
             const req = await clienteAxios.post(url, usuario)
             const data = await req.json();
->>>>>>> f0ae6ba4c906ca4864a06703b350107fcba660fe
 
             if (data.ok === true) {
                 toast.success(data.msg)
