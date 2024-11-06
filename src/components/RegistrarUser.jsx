@@ -16,7 +16,9 @@ const RegistrarUser = () => {
         apellido: "",
         email: "",
         password: "",
-        dni: ""
+        dni: "",
+        telefono: "",
+        especialidad: ""
     })
 
     const handleChange = (e) => {
@@ -27,10 +29,8 @@ const RegistrarUser = () => {
         e.preventDefault();
         setCargando(true)
         try {
-            
-            const url = "crear-usuario/"
-            const req = await clienteAxios.post(url, usuario)
-            const data = await req.json();
+            const url = "crear-usuario"
+            const {data} = await clienteAxios.post(url, usuario)
 
             if (data.ok === true) {
                 toast.success(data.msg)
@@ -52,7 +52,7 @@ const RegistrarUser = () => {
         <>
             <Navbar />
             <ToastContainer />
-            <form className="bg-slate-400 flex flex-col p-4 gap-3 lg:w-1/4 lg:mx-auto lg:mt-32" onSubmit={(e) => handleSubmit(e)}>
+            <form className="mt-32 mx-3  bg-slate-400 flex flex-col p-4 gap-3 lg:w-1/4 lg:mx-auto lg:mt-32" onSubmit={(e) => handleSubmit(e)}>
                 <h3 className="text-xl font-bold">Completa todos los campos</h3>
 
                 <div className="flex flex-col">
@@ -70,9 +70,29 @@ const RegistrarUser = () => {
                     <input className="p-1" type="text" minLength={8} maxLength={8} name="dni" required onChange={(e) => handleChange(e)} />
                 </div>
 
+                <div className="flex items-center justify-between mt-3">
+                    <label>Especialidad:</label>
+                    <select onChange={(e) => handleChange(e)} className="">
+                        <option value="">Seleccione una especialidad</option>
+                        <option value="cardiología">Cardiología</option>
+                        <option value="traumatologia">Traumatología</option>
+                        <option value="neurología">Neurología</option>
+                        <option value="oncología">Oncología</option>
+                        <option value="pediatría">Pediatría</option>
+                        <option value="psiquiatría">Psiquiatría</option>
+                        <option value="urología">Urología</option>
+                        <option value="otros">Otros</option>
+                    </select>
+                </div>
+
                 <div className="flex flex-col">
                     <label>Correo electrónico:</label>
                     <input className="p-1" type="email" name="email" onChange={(e) => handleChange(e)} />
+                </div>
+
+                <div className="flex flex-col">
+                    <label>Telefono:</label>
+                    <input className="p-1" type="text" name="telefono" minLength={10} maxLength={10} required onChange={(e) => handleChange(e)} />
                 </div>
 
                 <div className="flex flex-col">

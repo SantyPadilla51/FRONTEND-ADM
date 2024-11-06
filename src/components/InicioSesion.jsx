@@ -42,7 +42,7 @@ const InicioSesion = () => {
                     localStorage.setItem('token', data.token)
                     setTimeout(() => {
                         navigate("/admin/pacientes")
-                    }, 1000);
+                    }, 300);
                 }
                 setCargando(false)
 
@@ -74,7 +74,7 @@ const InicioSesion = () => {
 
                 <div className="flex flex-col">
                     <label type="text" name="password" required>Contraseña:</label>
-                    <input className="p-1" type="text" name="password" value={datos.password} onChange={(e) => hanldeChange(e)} />
+                    <input className="p-1" type="password" name="password" value={datos.password} onChange={(e) => hanldeChange(e)} />
                 </div>
 
                 <button

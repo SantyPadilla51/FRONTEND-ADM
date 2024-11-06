@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import clienteAxios from "../config/axios";
 
 const NuevoPassword = () => {
 
@@ -17,27 +18,43 @@ const NuevoPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setCargando(true)
+
         if (password === repetirPassword) {
             try {
                 setCargando(true)
-                const peticion = await fetch(`https://back-end-adm-pacientes.vercel.app/olvide-password/${token}`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        password: password
-                    })
-                })
+
+                const request = await fetch(
+                    `https://backend-adm.onrender.com/olvide-password/${token}`,
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            password
+                        })
+                    }
+                )
+                const data = await request.json()
+                console.log(data);
+                
+                
+                // if (data.estado != true) {
+                //     toast.error("Hubo un error al cambiar la contraseña")
+                //     setCargando(false)
+                // } else {
+                //     toast.success(data.msg)
+                //     setCargando(false)
+
+                //     setTimeout(() => {
+                //         navigate("/")
+                //     }, 2000);
+                // }
+
             } catch (error) {
                 toast.error("Ha ocurrido un error")
                 setCargando(false)
             }
-            toast.success("Contraseña cambiada con éxito")
-
-            setTimeout(() => {
-                navigate("/")
-            }, 2000);
 
         } else {
             toast.error("Las contraseñas no coinciden")
@@ -57,7 +74,7 @@ const NuevoPassword = () => {
         <>
             <ToastContainer />
             <Navbar />
-            <form className="drop-shadow-lg bg-slate-400 flex flex-col p-4  gap-3 lg:w-1/3 lg:mx-auto lg:mt-32" onSubmit={handleSubmit}>
+            <form className="mt-32 mx-3 drop-shadow-lg bg-slate-400 flex flex-col p-4  gap-3 lg:w-1/3 lg:mx-auto lg:mt-32" onSubmit={handleSubmit}>
 
                 <h1 className="text-xl bg-white p-2 uppercase">Genera un nuevo password</h1>
 

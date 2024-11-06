@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./Navbar";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import clienteAxios from "../config/axios";
 
 
 const RestablecerPassword = () => {
@@ -17,26 +18,25 @@ const RestablecerPassword = () => {
     setCargando(true)
 
     if (email === "") {
-      alert("Debes ingresar un correo electrónico")
+      toast.error("Debes ingresar un correo electrónico")
+      setCargando(false)
       return
     }
 
     try {
-      const res = await fetch('https://back-end-adm-pacientes.vercel.app/olvide-password', {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      })
+      
+      const url = "olvide-password"
+      const {data} = await clienteAxios.post(url, { email }, {
+        headers: { 'Content-Type': 'application/json' }
+      });
 
-      const result = await res.json()
-
-      if (result.ok === true) {
+      if (data.ok === true) {
         toast.success("Hemos enviado un email con las instrucciones")
         setCargando(false)
         setEmail(" ")
         setTimeout(() => {
           navigate("/")
-        }, 2000);
+        }, 3000);
 
 
       } else {
@@ -47,6 +47,7 @@ const RestablecerPassword = () => {
 
     } catch (error) {
       toast.error("Hubo un error al enviar el correo electrónico. Por favor, inténtelo más tarde.")
+      setCargando(false)
       return
     }
   }

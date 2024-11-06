@@ -81,7 +81,7 @@ const MiPerfil = () => {
     return (
         <>
             <NavbarAdmin />
-            <div className="mx-auto bg-white w-1/2 mt-10 p-4">
+            <div className="mx-4 lg:w-1/2 lg:mx-auto bg-white  mt-10 p-4">
                 <h1 className="bg-black text-white p-2 mb-5 font-bold">Mi Perfil</h1>
                 <ul>
                     <li className="font-semibold">Nombre: <span className="font-light">{datos.nombre}</span></li>
