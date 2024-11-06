@@ -39,17 +39,17 @@ const NuevoPassword = () => {
                 console.log(data);
                 
                 
-                // if (data.estado != true) {
-                //     toast.error("Hubo un error al cambiar la contraseña")
-                //     setCargando(false)
-                // } else {
-                //     toast.success(data.msg)
-                //     setCargando(false)
+                if (data.estado != true) {
+                    toast.error("Hubo un error al cambiar la contraseña")
+                    setCargando(false)
+                } else {
+                    toast.success(data.msg)
+                    setCargando(false)
 
-                //     setTimeout(() => {
-                //         navigate("/")
-                //     }, 2000);
-                // }
+                    setTimeout(() => {
+                        navigate("/")
+                    }, 2000);
+                }
 
             } catch (error) {
                 toast.error("Ha ocurrido un error")
